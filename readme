@@ -1,0 +1,8 @@
+Websocket - Chat 
+
+- NodeJs, JavaScript
+
+** Run 
+-- install nodejs
+-- npm install --save
+-- npm start ("the app is runningư with port:2002)

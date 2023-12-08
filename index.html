@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Websocket_midterm</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    
+    <style>
+        * {
+	box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  background-color: rgb(238, 209, 209);
+}
+
+ul {
+    list-style: none;
+    text-indent: -2em; 
+}
+
+
+ul li:before {
+    content: "\1F608";
+    margin: 0 0.5rem;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+input:focus, button:focus {
+  outline: none;
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 0;
+  position: relative;
+}
+
+header * {
+  z-index: 1;
+}
+
+header h1 {
+  margin: 0 0 30px;
+}
+
+form {
+  position: relative;
+  width: 500px;
+  max-width: 100%;
+}
+
+form input {
+  border: 0;
+  border-radius: 50px;
+  font-size: 16px;
+  padding: 15px 30px;
+  width: 100%;
+}
+
+a {
+  color: #0d0d0e;
+  font-size: 50px;
+  text-decoration: none;
+}
+form button {
+  position: absolute;
+  top: 2px;
+  right: 1px;
+  background-color: #0d0d0e;
+  border: 0;
+  border-radius: 50px;
+  color: #fff;
+  font-size: 16px;
+  padding: 13px 30px;
+}
+form button:hover {
+    background-color: #0707f5;
+    color: rgb(255, 255, 255);
+}
+
+</style>
+
+</head>
+
+<body>
+    <header>
+        <form id="form">
+                <input type="text" id="msg" placeholder="Enter your message" autofocus>
+                <button type="submit">Send</button>  
+        </form>     
+    </header>
+    <ul id="messages"></ul>
+    <div id="status"></div> 
+    <script>
+        $(function () {
+            const socket = io();
+            $('#form').submit(function(e){
+                e.preventDefault();
+                socket.emit('chat message', $('#msg').val());
+                $('#msg').val('');
+                return false;
+            });
+            socket.on('chat message', function(msg){
+                $('#messages').append($('<li>').text(msg));
+            });
+        
+        });
+    </script>   
+</body>
+</html>
